@@ -1,5 +1,9 @@
 # Fox Voice Assistant
 
+**Please note: The LLM used in this project is (Llama3.2:1B) and is inferenced via Ollama. If you don't have Ollama installed, please find my article here to install Ollama and download Llama3.2:1b:
+https://medium.com/@shelwyncorte/how-to-install-and-use-ollama-on-windows-and-linux-f54c8d87ad94**
+
+
 A complete voice assistant solution with a Python backend for PDF processing and a Three.js-based interactive 3D frontend. This project enables users to chat with their documents using voice commands in an immersive space environment.
 
 ## Getting Started
