@@ -74,9 +74,8 @@ The frontend will run on http://localhost:3000
    - Provide a name for the document
 
 Example using curl:
-```bash
-curl -X POST -F "file=@your_document.pdf" -F "name=your_document_name" http://localhost:8000/upload
-```
+![Uploading image.png…]()
+
 
 This process creates embeddings for your document, making it ready for queries.
 
