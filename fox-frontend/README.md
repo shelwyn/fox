@@ -12,7 +12,7 @@ An interactive 3D voice assistant built with Three.js and Web Speech API. Featur
 
 1. Clone the repository:
 ```bash
-git clone <your-repository-url>
+git clone git@github.com:shelwyn/fox.git
 cd fox-frontend
 ```
 
