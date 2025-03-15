@@ -73,8 +73,9 @@ The frontend will run on http://localhost:3000
    - Attach the PDF file
    - Provide a name for the document
 
-Example using curl:
-![Uploading image.png…]()
+Example using postman:
+![Fox Voice Assistant](postman.png)
+
 
 
 This process creates embeddings for your document, making it ready for queries.
