@@ -83,8 +83,9 @@ This process creates embeddings for your document, making it ready for queries.
 ### Step 2: Interact with the Voice Assistant
 
 1. Access the frontend application at http://localhost:3000
-2. Enter the document name you uploaded in the input field
+2. Enter the document name you uploaded in the input field (this enables RAG chat for that specific document)
 3. Click the "Start" button and allow microphone access when prompted
+![Fox Voice Assistant Interface](frontend.png "Fox Voice Assistant")
 4. Say "fox" to activate the voice assistant
 5. Ask your question when the blue wave appears
 6. Wait for the response:
