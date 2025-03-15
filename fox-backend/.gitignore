@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environment
+venv/
+env/
+.env
+
+# IDE settings
+.vscode/
+.idea/
+
+# Embeddings data files but keep the folder
+embeddings/*
+!embeddings/.gitkeep
+
+# Local development
+*.log
+.DS_Store

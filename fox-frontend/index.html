@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Robotic Voice Assistant</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Roboto', sans-serif;
+      }
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      #info {
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-size: 48px;
+        font-weight: 900;
+        text-transform: uppercase;
+        pointer-events: none;
+        z-index: 1;
+        text-shadow: 
+          0 1px 0 rgb(190,190,190),
+          0 2px 0 rgb(185,185,185),
+          0 3px 0 rgb(180,180,180),
+          0 4px 0 rgb(175,175,175),
+          0 5px 0 rgb(170,170,170),
+          0 6px 1px rgba(0,0,0,.1),
+          0 0 5px rgba(0,0,0,.1),
+          0 1px 3px rgba(0,0,0,.3),
+          0 3px 5px rgba(0,0,0,.2),
+          0 5px 10px rgba(0,0,0,.25),
+          0 10px 10px rgba(0,0,0,.2),
+          0 20px 20px rgba(0,0,0,.15);
+        transition: color 0.3s ease;
+      }
+      #info.listening-activation {
+        color: #ff4444;
+        text-shadow: 
+          0 1px 0 #cc3333,
+          0 2px 0 #bb2222,
+          0 3px 0 #aa1111,
+          0 4px 0 #990000,
+          0 5px 0 #880000,
+          0 6px 1px rgba(0,0,0,.1),
+          0 0 5px rgba(0,0,0,.1),
+          0 1px 3px rgba(0,0,0,.3),
+          0 3px 5px rgba(0,0,0,.2),
+          0 5px 10px rgba(0,0,0,.25),
+          0 10px 10px rgba(0,0,0,.2),
+          0 20px 20px rgba(0,0,0,.15);
+      }
+      #info.listening-query {
+        color: #4444ff;
+        text-shadow: 
+          0 1px 0 #3333cc,
+          0 2px 0 #2222bb,
+          0 3px 0 #1111aa,
+          0 4px 0 #000099,
+          0 5px 0 #000088,
+          0 6px 1px rgba(0,0,0,.1),
+          0 0 5px rgba(0,0,0,.1),
+          0 1px 3px rgba(0,0,0,.3),
+          0 3px 5px rgba(0,0,0,.2),
+          0 5px 10px rgba(0,0,0,.25),
+          0 10px 10px rgba(0,0,0,.2),
+          0 20px 20px rgba(0,0,0,.15);
+      }
+      #info.processing {
+        color: #ffff44;
+        text-shadow: 
+          0 1px 0 #cccc33,
+          0 2px 0 #bbbb22,
+          0 3px 0 #aaaa11,
+          0 4px 0 #999900,
+          0 5px 0 #888800,
+          0 6px 1px rgba(0,0,0,.1),
+          0 0 5px rgba(0,0,0,.1),
+          0 1px 3px rgba(0,0,0,.3),
+          0 3px 5px rgba(0,0,0,.2),
+          0 5px 10px rgba(0,0,0,.25),
+          0 10px 10px rgba(0,0,0,.2),
+          0 20px 20px rgba(0,0,0,.15);
+      }
+      #info.speaking {
+        color: #44ff44;
+        text-shadow: 
+          0 1px 0 #33cc33,
+          0 2px 0 #22bb22,
+          0 3px 0 #11aa11,
+          0 4px 0 #009900,
+          0 5px 0 #008800,
+          0 6px 1px rgba(0,0,0,.1),
+          0 0 5px rgba(0,0,0,.1),
+          0 1px 3px rgba(0,0,0,.3),
+          0 3px 5px rgba(0,0,0,.2),
+          0 5px 10px rgba(0,0,0,.25),
+          0 10px 10px rgba(0,0,0,.2),
+          0 20px 20px rgba(0,0,0,.15);
+      }
+      #canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #startButton {
+        padding: 20px 40px;
+        font-size: 24px;
+        background: rgba(0, 136, 255, 0.8);
+        color: white;
+        border: 2px solid rgba(0, 136, 255, 0.9);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      #startButton:hover {
+        background: rgba(0, 136, 255, 1);
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 136, 255, 0.5);
+      }
+      #documentInput {
+        padding: 15px 30px;
+        font-size: 18px;
+        background: rgba(0, 136, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(0, 136, 255, 0.9);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        width: 300px;
+        text-align: center;
+      }
+      #documentInput::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      #documentInput:focus {
+        outline: none;
+        background: rgba(0, 136, 255, 0.3);
+        box-shadow: 0 0 15px rgba(0, 136, 255, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="overlay">
+      <input type="text" id="documentInput" placeholder="Enter document to chat" />
+      <button id="startButton">Click to Start</button>
+    </div>
+    <div id="info">Click the button to begin</div>
+    <canvas id="canvas"></canvas>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
